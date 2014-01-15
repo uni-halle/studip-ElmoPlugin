@@ -1,0 +1,54 @@
+<div style="background-color:white;padding-top:5px;padding-bottom:5px;padding-left:20px;padding-right:20px;">
+<?if(count($msg)){?>
+	<table width="100%">
+	<?=parse_msg_array($msg,'blank',1,0)?>
+	</table>
+<?}?>
+<form name="elmoconfig" action="<?=PluginEngine::getLink($plugin, array('action' => 'themen')) ?>" method="POST">
+  <table class="steel1" width="100%" cellpadding="2" cellspacing="2" style="font-size:10pt;">
+
+	<tr>
+      <td colspan="2" style="font-weight:bold;">
+        <?= _("Themenliste:") ?>
+      </td>
+     </tr>
+	 <tr>
+	 <td colspan="2">
+	 <ol>
+	 <?foreach($plugin->issues as $issue_id => $issue){?>
+		 <li style="margin-left:5px;">
+		 <input type="text" size="60" name="elmo_issues[<?=$issue_id?>][title]" value="<?=htmlReady($issue['title'])?>" >
+		 sichtbar:
+		 <input type="checkbox" style="vertical-align:middle" name="elmo_issues[<?=$issue_id?>][is_visible]" <?=($issue['is_visible'] ? 'checked' : '')?> value="1">
+		 ab:
+		 <input name="accesstime_start_day[<?=$issue_id?>]" value="<?=($issue['visible_from'] ? date("d",$issue['visible_from']) : '')?>" size="2" maxlength="2" type="text">
+		 &nbsp;
+		 <input name="accesstime_start_month[<?=$issue_id?>]" value="<?=($issue['visible_from'] ? date("m",$issue['visible_from']) : '')?>" size="2" maxlength="2" type="text">
+		 &nbsp;
+		 <input name="accesstime_start_year[<?=$issue_id?>]"value="<?=($issue['visible_from'] ? date("Y",$issue['visible_from']) : '')?>" size="4" maxlength="4" type="text">
+		 &nbsp;
+		 <img align="absmiddle" src="<?=$GLOBALS['PLUGIN_ASSETS_URL']?>images/popupcalendar.png" border="0" onClick="window.open('<?=$GLOBALS['ABSOLUTE_URI_STUDIP']?>termin_eingabe_dispatch.php?form_name=elmoconfig&element_switch=accesstime_start&c=<?=$issue_id?>&imt=<?=($issue['visible_from'] ? $issue['visible_from'] : time())?>&atime=<?=$issue['visible_from']?>', 'InsertDate', 'dependent=yes, width=200, height=180, left=500, top=150')">
+		 &nbsp;
+		 Antworten sichtbar:
+		 <input type="checkbox" style="vertical-align:middle" name="elmo_issues[<?=$issue_id?>][answer_visible_default]" <?=($issue['answer_visible_default'] ? 'checked' : '')?> value="1">
+		 <?if($issue_id != 'new_entry'){?>
+		 &nbsp;&nbsp;
+		 <a href="<?=PluginEngine::getLink($plugin, array('action' => 'themen','move_up' => $issue_id))?>"><img src="<?=$GLOBALS['PLUGIN_ASSETS_URL']?>images/icons/16/yellow/arr_1up.png" border="0"></a>
+		 <a href="<?=PluginEngine::getLink($plugin, array('action' => 'themen','move_down' => $issue_id))?>"><img src="<?=$GLOBALS['PLUGIN_ASSETS_URL']?>images/icons/16/yellow/arr_1down.png" border="0"></a>
+		 <?}?>
+		 &nbsp;&nbsp;
+		 <a href="<?=PluginEngine::getLink($plugin, array('action' => 'themen','delete_issue' => $issue_id))?>"><img src="<?=$GLOBALS['PLUGIN_ASSETS_URL']?>images/icons/16/blue/trash.png" border="0" <?=tooltip(_("Thema löschen"))?>></a>
+		 </li>
+	 <?}?>
+	 <li style="margin-left:5px;list-style-type:none"><br>
+	 	<?=makeButton('hinzufuegen', 'input', _("Neues Thema hinzufügen"), 'add_issue') ?>
+        &nbsp;&nbsp;
+		<?= makeButton('uebernehmen', 'input', _("Eingaben abspeichern"), 'save') ?>
+	 </li>
+	 </ol>
+	 </td>
+	 </tr>
+
+  </table>
+</form>
+</div>

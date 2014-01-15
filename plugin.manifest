@@ -1,0 +1,7 @@
+pluginclassname=ElmoPlugin
+pluginname=Elearning-Modul
+origin=data-quest
+version=0.57
+dbscheme=install.sql
+uninstalldbscheme=uninstall.sql
+studipMinVersion=2.4

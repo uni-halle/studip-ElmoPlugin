@@ -1,0 +1,69 @@
+<table class="infobox" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	<td class="blank" align="center" valign="top">
+		  <table align="center" width="250" border="0" cellpadding="0" cellspacing="0">
+
+
+      <tr>
+        <td class="infobox-img" width="100%" align="center">
+          <img title="ElMo - Das kleine E-Learning-Modul" src="<?=$pluginpath?>/images/seminare.jpg">
+        </td>
+      </tr>
+
+
+    <tr>
+
+      <td  class="infoboxrahmen"  width="100%">
+        <table   align="center" width="99%" border="0" cellpadding="4" cellspacing="0" style="font-size:10pt">
+              <tr>
+                <td class="steel1" width="100%" colspan="2">
+				<?if(!isset($_REQUEST['new_remark'])){?>
+					<a href="<?=$base_uri?>&new_remark=1">
+                    <img src="<?=$GLOBALS['PLUGIN_ASSETS_URL']?>images/icons/16/black/add/comment.png" border="0" align="absbottom">
+					<?=_("Neuen Beitrag verfassen")?>
+					</a>
+                <?} else {?>
+					<form name="elmo_remark" action="<?=$base_uri?>" method="post">
+					<textarea style="width:100%" rows="5" name="elmo_remark_content"></textarea>
+					<div align="center">
+					<?=makeButton('abschicken','input',_("Neuen Hinweis speichern"),'create_remark')?>
+					&nbsp;
+					<?=makeButton('abbrechen', 'input',_("Eingabe abbrechen"),'cancel_remark')?>
+					</div>
+					<script type="text/javascript">document.forms['elmo_remark'].elmo_remark_content.focus();</script>
+					</form>
+				<?}?>
+				</td>
+              </tr>
+               <tr>
+                <td class="steel1" width="100%" colspan="2">
+                  <font size="-1"><b><?=_("Hinweise der Studierenden:")?></b></font>
+                  <br>
+                </td>
+              </tr>
+			  <?if(!count($shoutbox_autor)) {
+				  echo $this->render_partial('p_nocontent.php');
+			  } else {
+   				  echo $this->render_partial('p_content.php', array('content' => $shoutbox_autor));
+			  }
+			  ?>
+              <tr>
+                <td class="steel1" width="100%" colspan="2">
+                  <font size="-1"><b><?=_("Hinweise der/des Lehrenden:")?></b></font>
+                  <br>
+                </td>
+              </tr>
+			  <?if(!count($shoutbox_dozent)) {
+				  echo $this->render_partial('p_nocontent.php');
+			  } else {
+ 				  echo $this->render_partial('p_content.php', array('content' => $shoutbox_dozent));
+			  }
+			  ?>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+  </td>
+  </tr>
+  </table>
